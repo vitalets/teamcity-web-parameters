@@ -87,6 +87,54 @@ expected by plugin. The transformation is handled by external library [jolt](htt
 can have a look at their examples to get better understanding how to write required transformation. Also there is a 
 [demo](http://jolt-demo.appspot.com), where you can try convert your data without need to run any application.
 
+Transformation example:
+
+Input:
+```json
+[
+  {
+    "foo": "Key 1",
+    "bar": "Value 1"
+  },
+  {
+    "foo": "Key 2",
+    "bar": "Value 2"
+  }
+]
+```
+
+Jolt spec:
+```json
+[
+  {
+    "operation": "shift",
+    "spec": {
+      "*": {
+        "foo": ["options[&1].key"],
+        "bar": ["options[&1].value"]
+      }
+    }
+  }
+]
+```
+
+Output (in plugin format):
+```json
+{
+  "options" : [ 
+    {
+      "key" : "Key 1",
+      "value" : "Value 1"
+    }, 
+    {
+      "key" : "Key 2",
+      "value" : "Value 2"
+    } 
+  ]
+}
+```
+
+
 Configuration
 -------------
 After plugin is installed and web-service is functioning, you can start using it.
